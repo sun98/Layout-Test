@@ -9,13 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setTransparent(this);
+        setTransparent(this)
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<MineFragment>(R.id.mineFragment)
+        }
     }
 
     private fun setTransparent(activity: Activity) {
@@ -26,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     /**
      * 使状态栏透明
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private fun transparentStatusBar(activity: Activity) {
         activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
